@@ -804,7 +804,7 @@ the specific language governing permissions and limitations under the Apache Lic
             this.dropdown.on("mouseup", resultsSelector, this.bind(function (e) {
                 if ($(e.target).closest(".select2-result-selectable").length > 0) {
                     this.highlightUnderEvent(e);
-                    this.selectHighlighted(e);
+                    this.selectHighlighted(e,opts);
                 }
             }));
 
@@ -2035,7 +2035,7 @@ the specific language governing permissions and limitations under the Apache Lic
         },
 
         // abstract
-        selectHighlighted: function (options) {
+        selectHighlighted: function (options,opts) {
             if (this._touchMoved) {
               this.clearTouchMoved();
               return;
@@ -2043,6 +2043,7 @@ the specific language governing permissions and limitations under the Apache Lic
             var index=this.highlight(),
                 highlighted=this.results.find(".select2-highlighted"),
                 data = highlighted.closest('.select2-result').data("select2-data");
+                data = opts.queryChoice(data);
 
             if (data) {
                 this.highlight(index);
@@ -3681,7 +3682,8 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             return true;
-        }
+        },
+        queryChoice: function(data){return data;}
     };
 
     $.fn.select2.locales = [];
